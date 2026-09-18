@@ -1,0 +1,85 @@
+WEBVTT
+
+00:00:00.000 --> 00:00:06.500
+We present ARSTAG, an agentic real-to-sim-to-real system for task-specific robot data generation.
+
+00:00:06.500 --> 00:00:15.733
+From a single photograph and a task instruction, language agents reconstruct a simulation scene, generate robot-feasible demonstrations, and manage policy learning.
+
+00:00:15.733 --> 00:00:20.433
+The coordinator delegates screw-to-basket reconstruction to the reconstruction agent.
+
+00:00:20.433 --> 00:00:26.267
+The agent first creates a task-scoped scene graph, identifying the required objects and their support.
+
+00:00:26.267 --> 00:00:34.500
+The graph’s captions then prompt SAM 3 to generate candidate masks. A vision-language model binds each graph object to its matching mask.
+
+00:00:34.500 --> 00:00:38.167
+The same tool reconstructs bound objects using SAM 3D.
+
+00:00:38.167 --> 00:00:46.700
+The reconstruction tool levels the table, propagates its correction, and aligns support contacts, as this geometric visualization shows.
+
+00:00:46.700 --> 00:00:49.233
+The scene then settles under gravity.
+
+00:00:49.233 --> 00:00:56.500
+The collection agent generates a training-free expert that executes state-based skills using ground-truth simulation states.
+
+00:00:56.500 --> 00:01:02.233
+After feasibility checks, it collects demonstrations with task-consistent randomization.
+
+00:01:02.233 --> 00:01:08.600
+We perturb trajectories or induce mis-grasps, then record only the expert recovery for training.
+
+00:01:08.600 --> 00:01:17.533
+The learning agent configures the observation and action interfaces, trains a visuomotor policy, and evaluates it in closed-loop simulation.
+
+00:01:17.533 --> 00:01:20.800
+The trained policy is then deployed on the real robot.
+
+00:01:20.800 --> 00:01:27.533
+These real-robot executions demonstrate policy transfer using simulation-generated training data.
+
+00:01:27.533 --> 00:01:34.833
+We vary the object’s initial position across forty real-robot trials and record whether the policy completes the task.
+
+00:01:34.833 --> 00:01:41.567
+Across seven tasks, pi zero point five averages seventy-four point six percent success.
+
+00:01:41.567 --> 00:01:49.500
+We also test real-world recovery: after an operator displaces the target, the learned policy re-grasps it and completes the task.
+
+00:01:49.500 --> 00:01:57.500
+We evaluate the contribution of each randomization family by comparing the full recipe with variants that omit one family.
+
+00:01:57.500 --> 00:02:06.833
+Randomization improves robustness under varying conditions, with a trade-off between performance in fixed settings and generalization to new conditions.
+
+00:02:06.833 --> 00:02:15.733
+We evaluate how demonstration count affects policy learning under a fixed training budget. Performance improves as the generated dataset grows.
+
+00:02:15.733 --> 00:02:20.667
+We evaluate identity binding across ambiguous scenes, using appearance and spatial context to match scene-graph objects to their intended image regions.
+
+00:02:20.667 --> 00:02:25.567
+(Continuation of the same sentence.)
+
+00:02:25.567 --> 00:02:30.033
+We compare reconstructed scenes with and without support repair, which aligns support contacts to reduce settling motion and improve physical stability.
+
+00:02:30.033 --> 00:02:34.533
+(Continuation of the same sentence.)
+
+00:02:34.533 --> 00:02:43.600
+These results show that task scoping reduces reconstruction time, while identity binding and support repair improve the usability of the generated scenes.
+
+00:02:43.600 --> 00:02:51.533
+This execution profile tracks agent activity and pipeline progress through reconstruction, data collection, and learning.
+
+00:02:51.533 --> 00:02:58.300
+When the fixed pipeline stalls, the agent uses tool feedback to revise the scene and complete the workflow.
+
+00:02:58.300 --> 00:02:59.000
+(Closing title, no narration.)

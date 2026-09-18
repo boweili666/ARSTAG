@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>ARSTAG — Agentic Real2Sim2Real for Robot Data Generation</title>
+  <meta name="description" content="ARSTAG turns a single RGB image and a language instruction into simulated demonstrations for real-world robot policy learning.">
+  <meta name="theme-color" content="#f8f9fc">
+  <link rel="canonical" href="https://boweili666.github.io/ARSTAG/">
+  <meta property="og:type" content="website"><meta property="og:title" content="ARSTAG: An Agentic Real2Sim2Real System">
+  <meta property="og:description" content="From a single image and task instruction to robot policy-learning data. Explore the method, real-robot demonstrations, and experimental results.">
+  <meta property="og:url" content="https://boweili666.github.io/ARSTAG/">
+  <meta property="og:image" content="https://boweili666.github.io/ARSTAG/assets/video-poster.webp">
+  <link rel="stylesheet" href="styles.css"><script src="script.js" defer></script>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="site-header"><div class="nav-wrap"><a class="wordmark" href="#">ARSTAG<span class="dot">.</span></a><nav aria-label="Main navigation"><a href="#method">Method</a><a href="#video">Video</a><a href="#results">Results</a></nav><a class="profile" href="https://boweili666.github.io/">Bowei Li <span aria-hidden="true">↗</span></a></div></header>
+<main id="main">
+  <section class="hero wrap" aria-labelledby="title">
+    <p class="eyebrow">Agentic robot learning</p>
+    <h1 id="title">ARSTAG</h1>
+    <p class="full-title">An Agentic Real2Sim2Real System<br class="desktop-break"> for Task-Specific Robot Data Generation</p>
+    <p class="authors"><a href="https://boweili666.github.io/">Bowei Li</a><span>Yuner Zhang</span><span>Changliu Liu</span></p>
+    <p class="lead">One image. One instruction.<br>Simulation demonstrations for real-world robot learning.</p>
+    <div class="hero-actions"><a class="button primary" href="#video">Watch the video <span class="duration">2:59</span></a><a class="button secondary" href="#method">Explore the method <span aria-hidden="true">↓</span></a></div>
+    <div class="demo-heading"><p>Learned policies on the real robot</p><button id="toggle-demos" class="text-button" type="button" hidden>Pause demos</button></div>
+    <div class="demo-grid" aria-label="Six real-robot task examples">
+      <figure><video class="demo" muted loop playsinline preload="none" poster="assets/demo-0.webp" data-src="assets/demo-0.mp4" aria-label="Cone grasping demonstration"></video><figcaption><span>Cone grasping</span><span>2.07×</span></figcaption></figure>
+      <figure><video class="demo" muted loop playsinline preload="none" poster="assets/demo-1.webp" data-src="assets/demo-1.mp4" aria-label="Brick grasping demonstration"></video><figcaption><span>Brick grasping</span><span>2.07×</span></figcaption></figure>
+      <figure><video class="demo" muted loop playsinline preload="none" poster="assets/demo-2.webp" data-src="assets/demo-2.mp4" aria-label="Teapot handle grasping demonstration"></video><figcaption><span>Teapot handle</span><span>1.19×</span></figcaption></figure>
+      <figure><video class="demo" muted loop playsinline preload="none" poster="assets/demo-3.webp" data-src="assets/demo-3.mp4" aria-label="Screw shaft grasping demonstration"></video><figcaption><span>Screw shaft</span><span>2.07×</span></figcaption></figure>
+      <figure><video class="demo" muted loop playsinline preload="none" poster="assets/demo-4.webp" data-src="assets/demo-4.mp4" aria-label="Nut to plate placement demonstration"></video><figcaption><span>Nut to plate</span><span>3.12×</span></figcaption></figure>
+      <figure><video class="demo" muted loop playsinline preload="none" poster="assets/demo-5.webp" data-src="assets/demo-5.mp4" aria-label="Bowl stacking demonstration"></video><figcaption><span>Bowl stacking</span><span>3.12×</span></figcaption></figure>
+    </div>
+    <p class="media-note">Selected real-robot executions. Playback speeds are shown for each clip.</p>
+  </section>
+  <section class="intro wrap section" aria-labelledby="intro-title">
+    <div class="section-heading"><p class="eyebrow">The idea</p><h2 id="intro-title">Make the data, then learn the task.</h2></div>
+    <div class="intro-copy"><p>Simulation can supply robot training data at scale. Preparing the scene, designing expert behavior, and configuring collection still require substantial work for each new task.</p><p>ARSTAG brings these stages into a coordinated agent workflow. Given a single RGB image and a natural-language instruction, specialized agents reconstruct the relevant scene, generate robot-feasible demonstrations, and train a visuomotor policy for real-world deployment.</p></div>
+    <dl class="metrics"><div><dt>7</dt><dd>real-world manipulation tasks</dd></div><div><dt>3</dt><dd>visuomotor policy architectures</dd></div><div><dt>1,000</dt><dd>simulation demonstrations per task</dd></div><div><dt>74.6<span>%</span></dt><dd>average success with π<sub>0.5</sub></dd></div></dl>
+  </section>
+  <section class="section method-section" id="method" aria-labelledby="method-title"><div class="wrap">
+    <div class="section-heading"><p class="eyebrow">Method</p><h2 id="method-title">A coordinated path from image to policy.</h2><p>A coordinator delegates work and uses tool feedback to guide revisions across stages.</p></div>
+    <figure class="overview"><a href="assets/overview.webp" target="_blank" rel="noopener" aria-label="Open the full-size ARSTAG architecture figure"><img src="assets/overview.webp" width="2400" height="1234" loading="lazy" alt="ARSTAG architecture: an input image and instruction feed reconstruction, collection, and learning agents, coordinated through delegation, feedback, and recovery, before real-world evaluation."></a><figcaption>ARSTAG reconstructs a task-scoped scene, generates demonstrations, and learns policies for real-robot execution. Click the figure to enlarge.</figcaption></figure>
+    <div class="method-grid"><article><span class="step">01 / Reconstruction</span><h3>Reconstruct what the task needs.</h3><p>Vision-language reasoning selects objects and their supports in a scene graph. Caption-guided segmentation and identity binding link graph objects to image masks. Object reconstruction and support repair produce a usable simulation scene.</p></article><article><span class="step">02 / Collection</span><h3>A training-free simulation expert.</h3><p>The collection agent generates an expert that uses ground-truth simulation states and state-based skills. Feasibility screening and task-consistent randomization produce demonstrations, including recovery from disturbed states.</p></article><article><span class="step">03 / Learning</span><h3>Learn from simulated demonstrations.</h3><p>The learning agent configures policy training and closed-loop simulation evaluation. The resulting visuomotor policies use visual observations and proprioception for real-robot execution.</p></article></div>
+  </div></section>
+  <section class="section wrap" id="video" aria-labelledby="video-title">
+    <div class="section-heading"><p class="eyebrow">Project video</p><h2 id="video-title">The workflow, in motion.</h2><p>From scene construction to demonstrations, policy learning, and real-world evaluation.</p></div>
+    <div class="video-shell"><video id="project-video" controls playsinline preload="none" poster="assets/video-poster.webp" aria-label="ARSTAG project video, 2 minutes 59 seconds"><source src="assets/arstag-video.mp4" type="video/mp4"><track kind="captions" src="assets/narration-en.vtt" srclang="en" label="English">Your browser does not support HTML video. <a href="assets/arstag-video.mp4">Download the video</a>.</video></div>
+    <div class="video-meta"><span>English narration · 2 min 59 sec · captions available</span><a href="assets/arstag-video.mp4" download="ARSTAG_Project_Video.mp4">Download video <span aria-hidden="true">↓</span></a></div>
+  </section>
+  <section class="section results-section" id="results" aria-labelledby="results-title"><div class="wrap">
+    <div class="section-heading"><p class="eyebrow">Real-world evaluation</p><h2 id="results-title">Simulation data. Real-robot execution.</h2><p>Seven tasks cover general grasping, key-region grasping, placement, and stacking. All three policy architectures use the same generated demonstrations for each task.</p></div>
+    <div class="table-scroll" role="region" aria-label="Real-robot success rates by task" tabindex="0"><table><caption>Real-robot closed-loop success rate (%)</caption><thead><tr><th scope="col">Task</th><th scope="col">ACT</th><th scope="col">Diffusion Policy</th><th scope="col">π<sub>0.5</sub></th></tr></thead><tbody><tr><th scope="row">Cone grasping</th><td>55.0</td><td><strong>77.5</strong></td><td>65.0</td></tr><tr><th scope="row">Brick grasping</th><td>25.0</td><td>57.5</td><td><strong>92.5</strong></td></tr><tr><th scope="row">Teapot grasping</th><td>40.0</td><td>67.5</td><td><strong>72.5</strong></td></tr><tr><th scope="row">Screw grasping</th><td>62.5</td><td>72.5</td><td><strong>90.0</strong></td></tr><tr><th scope="row">Screw to basket</th><td>42.5</td><td><strong>62.5</strong></td><td>60.0</td></tr><tr><th scope="row">Nut to plate</th><td>35.0</td><td>62.5</td><td><strong>67.5</strong></td></tr><tr><th scope="row">Bowl stacking</th><td>45.0</td><td>67.5</td><td><strong>75.0</strong></td></tr></tbody><tfoot><tr><th scope="row">Average across seven tasks</th><td>43.6</td><td>66.8</td><td><strong>74.6</strong></td></tr></tfoot></table></div>
+    <p class="media-note">40 real-robot trials per task and policy. Bold values mark the highest success rate in each row.</p>
+    <div class="evidence-grid"><article><p class="eyebrow">Randomization ablation</p><h3>Robustness beyond the collection conditions.</h3><p>Leave-one-out ablations evaluate screw grasping under out-of-distribution conditions. Each cell reports success over 40 held-out simulation episodes.</p><div class="table-scroll"><table class="compact"><caption class="sr-only">OOD success rates with and without each randomization family</caption><thead><tr><th scope="col">Tested family</th><th scope="col">Full recipe</th><th scope="col">Without family</th></tr></thead><tbody><tr><th scope="row">Execution</th><td><strong>75.0%</strong></td><td>40.0%</td></tr><tr><th scope="row">Geometry</th><td><strong>62.5%</strong></td><td>40.0%</td></tr><tr><th scope="row">Background</th><td><strong>70.0%</strong></td><td>0.0%</td></tr></tbody></table></div></article><article><p class="eyebrow">Demonstration scale</p><h3>More generated data improves policy success.</h3><p>With 100,000 training steps held fixed, Diffusion Policy improves as the screw-grasping dataset grows. Each policy is evaluated over 40 held-out simulation episodes.</p><div class="table-scroll"><table class="compact"><caption class="sr-only">Success by number of generated demonstrations</caption><thead><tr><th scope="col">Demonstrations</th><th scope="col">Success</th></tr></thead><tbody><tr><th scope="row">50</th><td>0.0%</td></tr><tr><th scope="row">100</th><td>7.5%</td></tr><tr><th scope="row">200</th><td>27.5%</td></tr><tr><th scope="row">500</th><td>52.5%</td></tr><tr><th scope="row">1,000</th><td><strong>62.5%</strong></td></tr></tbody></table></div></article></div>
+  </div></section>
+</main>
+<footer class="wrap"><a class="wordmark" href="#">ARSTAG<span class="dot">.</span></a><p>An Agentic Real2Sim2Real System for Task-Specific Robot Data Generation</p><a href="https://github.com/boweili666/ARSTAG">Website source <span aria-hidden="true">↗</span></a></footer>
+</body></html>
