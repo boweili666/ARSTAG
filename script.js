@@ -30,3 +30,35 @@
   } else { visible = true; sync(); }
   updateLabel();
 })();
+
+// Load demonstration media only near the viewport; pause hidden galleries.
+(() => {
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)');
+  const mainVideo = document.querySelector('#project-video');
+  const groups = [...document.querySelectorAll('[data-gallery]')].map(grid => {
+    const toggle = grid.closest('.demo-section').querySelector('.gallery-toggle');
+    const state = {grid, toggle, videos:[...grid.querySelectorAll('video')], visible:false, enabled:grid.dataset.autoplay === 'true' && !reduce.matches};
+    toggle.hidden = false;
+    toggle.addEventListener('click', () => {state.enabled = !state.enabled; sync(state);});
+    return state;
+  });
+  function sync(state) {
+    const shouldPlay = state.visible && state.enabled && !document.hidden && mainVideo.paused;
+    state.toggle.textContent = state.enabled ? 'Pause demos' : 'Play demos';
+    state.toggle.setAttribute('aria-pressed',String(state.enabled));
+    state.videos.forEach(video => {
+      if (state.visible && !video.getAttribute('src')) {video.src=video.dataset.src; video.preload='metadata';}
+      if (shouldPlay) video.play().catch(() => {});
+      else video.pause();
+    });
+  }
+  const syncAll = () => groups.forEach(sync);
+  groups.forEach(state => {
+    if ('IntersectionObserver' in window) new IntersectionObserver(entries => {state.visible=entries[0].isIntersecting;sync(state);},{threshold:0.05}).observe(state.grid);
+    else {state.visible=true;sync(state);}
+    state.toggle.textContent = state.enabled ? 'Pause demos' : 'Play demos';
+  });
+  document.addEventListener('visibilitychange',syncAll);
+  mainVideo.addEventListener('play',syncAll);mainVideo.addEventListener('pause',syncAll);
+  reduce.addEventListener('change',event => {if(event.matches) groups.forEach(s => s.enabled=false);syncAll();});
+})();

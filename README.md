@@ -20,3 +20,7 @@ Run `python3 -m http.server 8000` in this directory to preview locally.
 GitHub Pages serves the repository root on the `main` branch. All media paths are relative so the site works at `/ARSTAG/`.
 
 The experimental values and media come from the authors' ARSTAG manuscript and accompanying video. Reproduction or reuse of research media requires permission from the authors.
+
+## Extended demonstration library
+
+The site includes six randomized simulation layouts, four real-world perturbation recoveries, two expert recovery examples, four identity-binding comparisons, six support-repair comparisons, three qualitative randomization comparisons, and two agent-workflow animations. Videos are loaded near the viewport and paused when hidden. Playback annotations and comparison limitations remain visible beside the media.
