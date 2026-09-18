@@ -7,3 +7,6 @@
 .tasks-overview{margin:35px 0 40px}.tasks-overview img{width:100%;height:auto;background:white;border:1px solid var(--line);border-radius:4px}.tasks-overview figcaption{font-size:12px;color:var(--muted);margin-top:12px}.tasks-overview figcaption a{white-space:nowrap}
 
 #ablation-demos .experiment-grid{grid-template-columns:1fr;gap:34px}#ablation-demos .experiment-card{max-width:1000px}#ablation-demos .experiment-card h4{font-size:18px}
+
+/* Lead with the narrated project video. */
+.featured-video{padding-top:32px;padding-bottom:32px}.opening-demos{text-align:center}.opening-demos>.lead{margin-top:0}.opening-demos>.media-note{text-align:left}@media(max-width:520px){.featured-video{padding-top:26px;padding-bottom:26px}}
