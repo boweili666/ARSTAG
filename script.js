@@ -40,29 +40,38 @@
     const state = {grid, toggle, videos:[...grid.querySelectorAll('video')], visible:false, enabled:grid.dataset.autoplay === 'true' && !reduce.matches};
     toggle.hidden = false;
     toggle.addEventListener('click', () => {state.enabled = !state.enabled; sync(state);});
-    if (grid.dataset.pageSize) {
-      const section = grid.closest('.demo-section');
-      const size = Number(grid.dataset.pageSize);
-      const cards = [...grid.querySelectorAll('[data-layout]')];
-      const pages = [...section.querySelectorAll('.gallery-page')];
-      pages.forEach(pageButton => pageButton.addEventListener('click', () => {
-        const page = Number(pageButton.dataset.page);
-        cards.forEach((card, index) => {card.hidden = index < page * size || index >= (page + 1) * size;});
-        pages.forEach(button => button.setAttribute('aria-pressed', String(button === pageButton)));
-        section.querySelector('.gallery-page-label').textContent = `Scenes ${page * size + 1}–${Math.min((page + 1) * size, cards.length)} of ${cards.length}`;
-        sync(state);
-      }));
+    if (grid.dataset.sequenceSize) {
+      state.sequenceSize = Number(grid.dataset.sequenceSize);
+      state.cards = [...grid.querySelectorAll('[data-layout]')];
+      state.page = 0;
+      state.label = grid.closest('.demo-section').querySelector('.gallery-sequence-label');
+      state.videos.forEach(video => video.addEventListener('ended', () => sync(state)));
     }
     return state;
   });
   function sync(state) {
     const shouldPlay = state.visible && state.enabled && !document.hidden && mainVideo.paused;
+    // Hold short clips on their final frame until all six have finished.
+    if (shouldPlay && state.sequenceSize) {
+      const selectedVideos = state.videos.filter(video => !video.closest('[hidden]'));
+      if (selectedVideos.length && selectedVideos.every(video => video.ended)) {
+        const pageCount = Math.ceil(state.cards.length / state.sequenceSize);
+        state.page = (state.page + 1) % pageCount;
+        state.cards.forEach((card, index) => {
+          card.hidden = index < state.page * state.sequenceSize || index >= (state.page + 1) * state.sequenceSize;
+          if (!card.hidden) card.querySelector('video').currentTime = 0;
+        });
+        const first = state.page * state.sequenceSize + 1;
+        const last = Math.min((state.page + 1) * state.sequenceSize, state.cards.length);
+        state.label.textContent = `Group ${state.page + 1} of ${pageCount} · Scenes ${first}–${last}`;
+      }
+    }
     state.toggle.textContent = state.enabled ? 'Pause demos' : 'Play demos';
     state.toggle.setAttribute('aria-pressed',String(state.enabled));
     state.videos.forEach(video => {
       const selected = !video.closest('[hidden]');
       if (state.visible && selected && !video.getAttribute('src')) {video.src=video.dataset.src; video.preload='metadata';}
-      if (shouldPlay && selected) video.play().catch(() => {});
+      if (shouldPlay && selected && !(state.sequenceSize && video.ended)) video.play().catch(() => {});
       else video.pause();
     });
   }

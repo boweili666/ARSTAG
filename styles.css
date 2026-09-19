@@ -11,4 +11,5 @@
 /* Lead with the narrated project video. */
 .featured-video{padding-top:32px;padding-bottom:32px}.opening-demos{text-align:center}.opening-demos>.lead{margin-top:0}.opening-demos>.media-note{text-align:left}@media(max-width:520px){.featured-video{padding-top:26px;padding-bottom:26px}}
 
-.gallery-pagination{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:14px;margin-top:24px}.gallery-page-label{font-size:13px;color:var(--muted)}.gallery-pagination>div{display:flex;gap:8px}.gallery-page{border:1px solid var(--line);background:white;color:var(--ink);border-radius:4px;padding:8px 16px;cursor:pointer;font-size:13px}.gallery-page[aria-pressed="true"]{background:var(--blue);border-color:var(--blue);color:white}.gallery-page:hover{border-color:var(--blue)}
+
+.gallery-sequence-label{font-size:13px;color:var(--muted);margin-top:20px}

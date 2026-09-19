@@ -23,4 +23,4 @@ The experimental values and media come from the authors' ARSTAG manuscript and a
 
 ## Extended demonstration library
 
-The site includes 24 randomized simulation layouts, browsable in groups of six, four real-world perturbation recoveries, two expert recovery examples, four identity-binding comparisons, six support-repair comparisons, three qualitative randomization comparisons, and two agent-workflow animations. Videos are loaded near the viewport and paused when hidden. Playback annotations and comparison limitations remain visible beside the media.
+The site includes 24 randomized simulation layouts, playing automatically in four consecutive groups of six, four real-world perturbation recoveries, two expert recovery examples, four identity-binding comparisons, six support-repair comparisons, three qualitative randomization comparisons, and two agent-workflow animations. Videos are loaded near the viewport and paused when hidden. Playback annotations and comparison limitations remain visible beside the media.
