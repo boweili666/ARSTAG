@@ -44,7 +44,7 @@
   <section class="intro wrap section" aria-labelledby="intro-title">
     <div class="section-heading"><p class="eyebrow">The idea</p><h2 id="intro-title">Make the data, then learn the task.</h2></div>
     <div class="intro-copy"><p>Simulation can supply robot training data at scale. Preparing the scene, designing expert behavior, and configuring collection still require substantial work for each new task.</p><p>ARSTAG brings these stages into a coordinated agent workflow. Given a single RGB image and a natural-language instruction, specialized agents reconstruct the relevant scene, generate robot-feasible demonstrations, and train a visuomotor policy for real-world deployment.</p></div>
-    <dl class="metrics"><div><dt>7</dt><dd>real-world manipulation tasks</dd></div><div><dt>3</dt><dd>visuomotor policy architectures</dd></div><div><dt>1,000</dt><dd>simulation demonstrations per task</dd></div><div><dt>74.6<span>%</span></dt><dd>average success with π<sub>0.5</sub></dd></div></dl>
+    <dl class="metrics"><div><dt>7</dt><dd>real-world manipulation tasks</dd></div><div><dt>3</dt><dd>visuomotor policy architectures</dd></div><div><dt>1,000</dt><dd>simulation demonstrations per task</dd></div><div><dt>74.6<span>%</span></dt><dd>Average real-world success across seven tasks with π<sub>0.5</sub></dd></div></dl>
   </section>
   <section class="section method-section" id="method" aria-labelledby="method-title"><div class="wrap">
     <div class="section-heading"><p class="eyebrow">Method</p><h2 id="method-title">A coordinated path from image to policy.</h2><p>A coordinator delegates work and uses tool feedback to guide revisions across stages.</p></div>
